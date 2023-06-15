@@ -1,0 +1,11 @@
+inicio
+double a;
+int b;
+char c;
+se (a > b){
+imprima(a);
+}
+senao {
+imprima(b);
+}
+fim
