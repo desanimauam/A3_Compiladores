@@ -1,0 +1,4 @@
+se (x > 10)
+    imprimir("x é maior que 10")
+senao
+    imprimir("x é menor ou igual a 10")
