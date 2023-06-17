@@ -22,7 +22,11 @@ comando : atribuicao | chamadaFuncao | decVariavel | comandoImprimir | comPor;
 
 atribuicao : variavel '=' expressao;
 
-comandoSe : 'se' '(' condicao ')' bloco ('senao' bloco)?;
+comandoSe : 'se' condicao':' bloco comandoSeSenao? comandoSenao?;
+
+comandoSenao : 'senao' ':' bloco?;
+
+comandoSeSenao : 'se senao' condicao':' bloco?;
 
 comandoEnquanto : 'enquanto' '(' condicao ')' bloco;
 
