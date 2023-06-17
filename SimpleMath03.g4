@@ -6,7 +6,7 @@ WS : [ \t\r\n]+ -> skip;
 // Regras gramaticais
 programa : (comando | comandoSe | comandoEnquanto)* EOF {System.out.println("OK"); };
 
-tipo : 'inteiro' | 'duplo' | 'texto';
+tipo : 'inteiro' | 'duplo' | 'texto' | 'booleano';
 
 decVariavel : tipo ID ('=' expressao)?;
 
@@ -18,7 +18,7 @@ inicioPor : decVariavel | expressao;
 
 atualizaPor : atribuicao (',' atribuicao)*;
 
-comando : atribuicao | chamadaFuncao | decVariavel | comandoImprimir | comPor;
+comando : atribuicao | atribuicaoBooleana | chamadaFuncao | decVariavel | decVariavelBooleana | comandoImprimir | comPor;
 
 atribuicao : variavel '=' expressao;
 
@@ -32,18 +32,34 @@ comandoEnquanto : 'enquanto' '(' condicao ')' bloco;
 
 bloco : comando+;
 
-condicao : expressao operadorRelacional expressao;
+condicao : expressaoRelacional | expressaoBooleana;
+
+decVariavelBooleana : 'booleano' ID ('=' expressaoBooleana)?;
 
 operadorRelacional : '==' | '!=' | '<' | '>' | '<=' | '>=';
 
-expressao : termo ((Soma | Subtracao) termo)*;
+expressao : expressaoAritmetica;
+
+expressaoRelacional : expressao operadorRelacional expressao;
+
+expressaoAritmetica : termo ((Soma | Subtracao) termo)*;
+
+expressaoBooleana : expressaoLogica | expressao;
+
+expressaoLogica : expressaoBooleana '&&' expressaoBooleana
+                 | expressaoBooleana '||' expressaoBooleana
+                 | '!' expressaoBooleana;
+				 
+atribuicaoBooleana : variavel '=' expressaoBooleana;
 
 termo : fator ((Multiplicacao | Divisao | Modulo) fator)*;
 
 fator : NUMERO
        | TEXTO
        | variavel
-       | '(' expressao ')';
+	   | 'verdadeiro'
+	   | 'falso'
+       | '(' expressaoAritmetica ')';
 
 variavel : ID;
 

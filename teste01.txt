@@ -1,0 +1,7 @@
+int num1;
+int num2;
+se(num1 > num2) {
+    imprima("num1 é maior que num2.");
+} senao {
+    imprima("num1 não é maior que num2.");
+}
