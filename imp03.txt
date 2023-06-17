@@ -1,0 +1,6 @@
+inteiro x = 4
+inteiro y = 11
+
+booleano condicao = (x > 5) e (y < 10)
+
+imprimir(condicao)

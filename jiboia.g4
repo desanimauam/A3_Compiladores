@@ -1,4 +1,4 @@
-grammar SimpleMath03;
+grammar jiboia;
 
 // Regras léxicas
 WS : [ \t\r\n]+ -> skip;
@@ -18,48 +18,46 @@ inicioPor : decVariavel | expressao;
 
 atualizaPor : atribuicao (',' atribuicao)*;
 
-comando : atribuicao | atribuicaoBooleana | chamadaFuncao | decVariavel | decVariavelBooleana | comandoImprimir | comPor;
+comando : atribuicao | chamadaFuncao | decVariavel | comandoImprimir | comPor;
 
 atribuicao : variavel '=' expressao;
 
-comandoSe : 'se' condicao':' bloco comandoSeSenao? comandoSenao?;
+comandoSe : 'se' condicao ':' bloco comandoSeSenao? comandoSenao?;
 
 comandoSenao : 'senao' ':' bloco?;
 
-comandoSeSenao : 'se senao' condicao':' bloco?;
+comandoSeSenao : 'se senao' condicao ':' bloco?;
 
-comandoEnquanto : 'enquanto' '(' condicao ')' bloco;
+comandoEnquanto : 'enquanto' '(' condicao ')' ':' bloco;
 
 bloco : comando+;
 
-condicao : expressaoRelacional | expressaoBooleana;
+condicao : expressaoLogica;
 
-decVariavelBooleana : 'booleano' ID ('=' expressaoBooleana)?;
+atribuicaoBooleana : variavel '=' expressaoLogica;
 
 operadorRelacional : '==' | '!=' | '<' | '>' | '<=' | '>=';
 
-expressao : expressaoAritmetica;
+expressao : expressaoLogica | expressaoAritmetica;
 
-expressaoRelacional : expressao operadorRelacional expressao;
+expressaoRelacional : expressaoAritmetica (operadorRelacional expressaoAritmetica)?;
 
-expressaoAritmetica : termo ((Soma | Subtracao) termo)*;
+expressaoAritmetica : fator ((Soma | Subtracao) fator)*;
 
-expressaoBooleana : expressaoLogica | expressao;
+expressaoLogica : expressaoRelacional (operadorLogico expressaoRelacional)*;
 
-expressaoLogica : expressaoBooleana '&&' expressaoBooleana
-                 | expressaoBooleana '||' expressaoBooleana
-                 | '!' expressaoBooleana;
-				 
-atribuicaoBooleana : variavel '=' expressaoBooleana;
+operadorLogico : 'e' | 'ou' | '!';
 
 termo : fator ((Multiplicacao | Divisao | Modulo) fator)*;
+
+decVariavelBooleana : 'booleano' ID '=' expressaoLogica;
 
 fator : NUMERO
        | TEXTO
        | variavel
-	   | 'verdadeiro'
-	   | 'falso'
-       | '(' expressaoAritmetica ')';
+       | 'verdadeiro'
+       | 'falso'
+       | '(' expressao ')';
 
 variavel : ID;
 
