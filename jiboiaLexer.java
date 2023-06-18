@@ -103,7 +103,9 @@ public class jiboiaLexer extends Lexer {
 		int escopo;
 		int tipo;
 		String nome;
+		String tipoJava;
 		String t="    ";
+		String idt="";
 
 
 	public jiboiaLexer(CharStream input) {

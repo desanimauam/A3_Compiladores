@@ -8,21 +8,39 @@ grammar jiboia;
 	int escopo;
 	int tipo;
 	String nome;
+	String tipoJava;
 	String t="    ";
+	String idt="";
 }
 
 // Regras léxicas
 WS : [ \t\r\n]+ -> skip;
 
 // Regras gramaticais - inicio
-programa : {saida+="public class Saida{\n"+t+"\n"+t+"public static void main(String args[]){\n";}
-			(comando | comandoSe | comandoEnquanto)*  EOF {saida+="\n"+t+"}\n}";  System.out.println(saida);};
+programa : {idt=t; saida+="public class Saida{\n" + idt + "public static void main(String args[]){\n"; idt+=t;}
+			(comando | comandoSe | comandoEnquanto)*  EOF {idt=t; saida+="\n"+idt+"}\n}";  System.out.println(saida);};
 
 tipo : 'inteiro' | 'duplo' | 'texto' | 'booleano';
 
 infVariavel: ('=' expressao)?;
 
-decVariavel : tipo ID infVariavel {saida+= $tipo.text + " " + $ID.text + $infVariavel.text + ";\n";};
+decVariavel : tipo ID infVariavel {
+	switch($tipo.text){
+        case "inteiro":
+            tipoJava = "int";
+			break;
+		case "duplo":
+			tipoJava = "double";
+			break;
+		case "texto":
+			tipoJava = "String";
+			break;
+		case "booleano":
+			tipoJava = "boolean";
+			break;
+		}
+
+	saida+= ""+ tipoJava + " " + $ID.text + $infVariavel.text + ";\n";};
 
 chamadaFuncao : ID ('.' ID)* '(' (expressao (',' expressao)*)? ')';
 
@@ -32,12 +50,12 @@ inicioPor : decVariavel | expressao;
 
 atualizaPor : atribuicao (',' atribuicao)*;
 
-comando : ({saida+=""+t+t;}atribuicao) 
-        | ({saida+=""+t+t;}chamadaFuncao)
-        | ({saida+=""+t+t;}decVariavel)
-        | ({saida+=""+t+t;}comandoImprimir {saida+=$comandoImprimir.text + "\n";})
-        | ({saida+=""+t+t;}comPor)
-        | ({saida+=""+t+t;}comandoSe)
+comando : ({saida+=""+idt;}atribuicao) 
+        | ({saida+=""+idt;}chamadaFuncao)
+        | ({saida+=""+idt;}decVariavel)
+        | ({saida+=""+idt;}comandoImprimir {saida+=$comandoImprimir.text + "\n";})
+        | ({saida+=""+idt;}comPor)
+        | ({saida+=""+idt;}comandoSe)
         | (comandoEnquanto);
 
 atribuicao : variavel (atribuicaoComposta | '=' expressao);
@@ -48,8 +66,8 @@ atribuicaoComposta : '+=' expressao
                    | '/=' expressao
                    | '%=' expressao;
 
-comandoSe : 'se' {saida+="\n" + t+t + "if (";} condicao {saida+=$condicao.text + "){\n";} ':'
-			{saida+=""+t+t;} bloco comandoSenaoSe* comandoSenao?;
+comandoSe : 'se' {saida+="\n" + idt + "if (";} condicao {saida+=$condicao.text + "){\n";} ':'
+			{idt+=t;} bloco comandoSenaoSe* comandoSenao?;
 
 comandoSenao : 'senao' ':' bloco;
 

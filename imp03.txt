@@ -1,6 +1,7 @@
-duplo i 
-texto t = "t"
-texto g="g"
+duplo d 
+texto t
+inteiro i
+booleano b
 
 se i < 10:
 	duplo i = 0.0

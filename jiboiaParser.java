@@ -116,7 +116,9 @@ public class jiboiaParser extends Parser {
 		int escopo;
 		int tipo;
 		String nome;
+		String tipoJava;
 		String t="    ";
+		String idt="";
 
 	public jiboiaParser(TokenStream input) {
 		super(input);
@@ -165,7 +167,7 @@ public class jiboiaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			saida+="public class Saida{\n"+t+"\n"+t+"public static void main(String args[]){\n";
+			idt=t; saida+="public class Saida{\n" + idt + "public static void main(String args[]){\n"; idt+=t;
 			setState(64);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -200,7 +202,7 @@ public class jiboiaParser extends Parser {
 			}
 			setState(67);
 			match(EOF);
-			saida+="\n"+t+"}\n}";  System.out.println(saida);
+			idt=t; saida+="\n"+idt+"}\n}";  System.out.println(saida);
 			}
 		}
 		catch (RecognitionException re) {
@@ -349,7 +351,23 @@ public class jiboiaParser extends Parser {
 			((DecVariavelContext)_localctx).ID = match(ID);
 			setState(78);
 			((DecVariavelContext)_localctx).infVariavel = infVariavel();
-			saida+=(((DecVariavelContext)_localctx).tipo!=null?_input.getText(((DecVariavelContext)_localctx).tipo.start,((DecVariavelContext)_localctx).tipo.stop):null) + " " + (((DecVariavelContext)_localctx).ID!=null?((DecVariavelContext)_localctx).ID.getText():null) + (((DecVariavelContext)_localctx).infVariavel!=null?_input.getText(((DecVariavelContext)_localctx).infVariavel.start,((DecVariavelContext)_localctx).infVariavel.stop):null) + ";\n";
+
+				switch((((DecVariavelContext)_localctx).tipo!=null?_input.getText(((DecVariavelContext)_localctx).tipo.start,((DecVariavelContext)_localctx).tipo.stop):null)){
+			        case "inteiro":
+			            tipoJava = "int";
+						break;
+					case "duplo":
+						tipoJava = "double";
+						break;
+					case "texto":
+						tipoJava = "String";
+						break;
+					case "booleano":
+						tipoJava = "boolean";
+						break;
+					}
+
+				saida+= ""+ tipoJava + " " + (((DecVariavelContext)_localctx).ID!=null?((DecVariavelContext)_localctx).ID.getText():null) + (((DecVariavelContext)_localctx).infVariavel!=null?_input.getText(((DecVariavelContext)_localctx).infVariavel.start,((DecVariavelContext)_localctx).infVariavel.stop):null) + ";\n";
 			}
 		}
 		catch (RecognitionException re) {
@@ -699,7 +717,7 @@ public class jiboiaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				{
-				saida+=""+t+t;
+				saida+=""+idt;
 				setState(126);
 				atribuicao();
 				}
@@ -709,7 +727,7 @@ public class jiboiaParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				{
-				saida+=""+t+t;
+				saida+=""+idt;
 				setState(128);
 				chamadaFuncao();
 				}
@@ -719,7 +737,7 @@ public class jiboiaParser extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				{
-				saida+=""+t+t;
+				saida+=""+idt;
 				setState(130);
 				decVariavel();
 				}
@@ -729,7 +747,7 @@ public class jiboiaParser extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 				{
-				saida+=""+t+t;
+				saida+=""+idt;
 				setState(132);
 				((ComandoContext)_localctx).comandoImprimir = comandoImprimir();
 				saida+=(((ComandoContext)_localctx).comandoImprimir!=null?_input.getText(((ComandoContext)_localctx).comandoImprimir.start,((ComandoContext)_localctx).comandoImprimir.stop):null) + "\n";
@@ -740,7 +758,7 @@ public class jiboiaParser extends Parser {
 				enterOuterAlt(_localctx, 5);
 				{
 				{
-				saida+=""+t+t;
+				saida+=""+idt;
 				setState(136);
 				comPor();
 				}
@@ -750,7 +768,7 @@ public class jiboiaParser extends Parser {
 				enterOuterAlt(_localctx, 6);
 				{
 				{
-				saida+=""+t+t;
+				saida+=""+idt;
 				setState(138);
 				comandoSe();
 				}
@@ -975,13 +993,13 @@ public class jiboiaParser extends Parser {
 			{
 			setState(160);
 			match(T__17);
-			saida+="\n" + t+t + "if (";
+			saida+="\n" + idt + "if (";
 			setState(162);
 			((ComandoSeContext)_localctx).condicao = condicao();
 			saida+=(((ComandoSeContext)_localctx).condicao!=null?_input.getText(((ComandoSeContext)_localctx).condicao.start,((ComandoSeContext)_localctx).condicao.stop):null) + "){\n";
 			setState(164);
 			match(T__11);
-			saida+=""+t+t;
+			idt+=t;
 			setState(166);
 			bloco();
 			setState(170);
