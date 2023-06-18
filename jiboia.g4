@@ -1,14 +1,28 @@
 grammar jiboia;
 
+@header { import java.util.*; }
+@members {
+	Variavel x = new Variavel();
+	ControleVariavel cv = new ControleVariavel();
+	String saida="";
+	int escopo;
+	int tipo;
+	String nome;
+	String t="    ";
+}
+
 // Regras léxicas
 WS : [ \t\r\n]+ -> skip;
 
-// Regras gramaticais
-programa : (comando | comandoSe | comandoEnquanto)* EOF {System.out.println("OK"); };
+// Regras gramaticais - inicio
+programa : {saida+="public class Saida{\n"+t+"\n"+t+"public static void main(String args[]){\n";}
+			(comando | comandoSe | comandoEnquanto)*  EOF {saida+="\n"+t+"}\n}";  System.out.println(saida);};
 
 tipo : 'inteiro' | 'duplo' | 'texto' | 'booleano';
 
-decVariavel : tipo ID ('=' expressao)?;
+infVariavel: ('=' expressao)?;
+
+decVariavel : tipo ID infVariavel {saida+= ""+t+t + $tipo.text + " " + $ID.text + $infVariavel.text + ";\n";};
 
 chamadaFuncao : ID ('.' ID)* '(' (expressao (',' expressao)*)? ')';
 
@@ -34,7 +48,8 @@ atribuicaoComposta : '+=' expressao
                    | '/=' expressao
                    | '%=' expressao;
 
-comandoSe : 'se' condicao ':' bloco comandoSenaoSe* comandoSenao?;
+comandoSe : 'se' {saida+="\n" + t+t + "if (";} condicao {saida+=$condicao.text + "){\n";} ':'
+			{saida+=""+t+t;} bloco {saida+=$bloco.text + "\n"+t+t+t;} comandoSenaoSe* comandoSenao?;
 
 comandoSenao : 'senao' ':' bloco;
 
@@ -42,7 +57,7 @@ comandoSenaoSe : 'senaose' condicao ':' bloco;
 
 comandoEnquanto : 'enquanto' condicao ':' bloco;
 
-bloco : comando+;
+bloco : comando + ;
 
 condicao : expressaoLogica;
 

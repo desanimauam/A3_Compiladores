@@ -1,8 +1,10 @@
-duplo i = 0.0
+duplo i 
+texto t = "t"
+texto g="g"
 
 se i < 10:
-	imprimir("A")
-	
+	duplo i
+
 senaose i == 10:
 	imprimir("B")
 	
