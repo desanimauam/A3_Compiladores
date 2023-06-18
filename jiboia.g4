@@ -12,23 +12,35 @@ decVariavel : tipo ID ('=' expressao)?;
 
 chamadaFuncao : ID ('.' ID)* '(' (expressao (',' expressao)*)? ')';
 
-comPor : 'por' '(' inicioPor?  condicao? ';' atualizaPor? ')' bloco;
+comPor : 'por' '(' inicioPor ';' condicao ';' atualizaPor ')' ':' bloco;
 
 inicioPor : decVariavel | expressao;
 
 atualizaPor : atribuicao (',' atribuicao)*;
 
-comando : atribuicao | chamadaFuncao | decVariavel | comandoImprimir | comPor;
+comando : atribuicao
+        | chamadaFuncao
+        | decVariavel
+        | comandoImprimir
+        | comPor
+        | comandoSe
+        | comandoEnquanto;
 
-atribuicao : variavel '=' expressao;
+atribuicao : variavel (atribuicaoComposta | '=' expressao);
 
-comandoSe : 'se' condicao ':' bloco comandoSeSenao? comandoSenao?;
+atribuicaoComposta : '+=' expressao
+                   | '-=' expressao
+                   | '*=' expressao
+                   | '/=' expressao
+                   | '%=' expressao;
 
-comandoSenao : 'senao' ':' bloco?;
+comandoSe : 'se' condicao ':' bloco comandoSenaoSe* comandoSenao?;
 
-comandoSeSenao : 'se senao' condicao ':' bloco?;
+comandoSenao : 'senao' ':' bloco;
 
-comandoEnquanto : 'enquanto' '(' condicao ')' ':' bloco;
+comandoSenaoSe : 'senaose' condicao ':' bloco;
+
+comandoEnquanto : 'enquanto' condicao ':' bloco;
 
 bloco : comando+;
 
@@ -36,7 +48,7 @@ condicao : expressaoLogica;
 
 atribuicaoBooleana : variavel '=' expressaoLogica;
 
-operadorRelacional : '==' | '!=' | '<' | '>' | '<=' | '>=';
+operadorRelacional : '==' | '!=' | '<' | '>' | '<=' | '>=' | '=';
 
 expressao : expressaoLogica | expressaoAritmetica;
 

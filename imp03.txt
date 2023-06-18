@@ -1,6 +1,17 @@
-inteiro x = 4
-inteiro y = 11
+duplo i = 0.0
 
-booleano condicao = (x > 5) e (y < 10)
+se i < 10:
+	imprimir("A")
+	
+senaose i == 10:
+	imprimir("B")
+	
+senaose i == 5:
+	imprimir("D")
+	
+senao:
+	imprimir("C")
 
-imprimir(condicao)
+enquanto i < 5:
+	imprimir("oi")
+	i += 1
