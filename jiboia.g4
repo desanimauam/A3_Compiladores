@@ -55,7 +55,7 @@ comandoSenao : 'senao' ':' bloco;
 
 comandoSenaoSe : 'senaose' condicao ':' bloco;
 
-comandoEnquanto : 'enquanto' condicao ':' bloco;
+comandoEnquanto : 'enquanto' {saida+="while (";} condicao {saida+="lalala){\n";}':' bloco;
 
 bloco : comando + ;
 
@@ -88,7 +88,9 @@ fator : NUMERO
 
 variavel : ID;
 
-comandoImprimir : 'imprimir' '(' expressao ')';
+imprimivel: (variavel | NUMERO | TEXTO);
+
+comandoImprimir: 'imprima' {saida+="System.out.println";} AP{saida+="(";} imprimivel{saida+=$imprimivel.text;} FP{saida+=");\n"+t+t;};
 
 Soma : '+';
 Subtracao : '-';
@@ -99,3 +101,5 @@ Modulo : '%';
 NUMERO : [0-9]+ ('.' [0-9]+)?;
 TEXTO : '"' ~[\r\n]* '"';
 ID : [a-zA-Z]+;
+AP: '(' ;
+FP: ')' ;

@@ -353,6 +353,18 @@ public class jiboiaBaseListener implements jiboiaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterImprimivel(jiboiaParser.ImprimivelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImprimivel(jiboiaParser.ImprimivelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterComandoImprimir(jiboiaParser.ComandoImprimirContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -2,18 +2,9 @@ duplo i
 texto t = "t"
 texto g="g"
 
-se i < 10:
-	duplo i
+inteiro x = 10
 
-senaose i == 10:
-	imprimir("B")
-	
-senaose i == 5:
-	imprimir("D")
-	
-senao:
-	imprimir("C")
 
-enquanto i < 5:
-	imprimir("oi")
-	i += 1
+	enquanto x > 0:
+		imprimir(x)
+		x -= 1

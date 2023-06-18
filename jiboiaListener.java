@@ -288,6 +288,16 @@ public interface jiboiaListener extends ParseTreeListener {
 	 */
 	void exitVariavel(jiboiaParser.VariavelContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link jiboiaParser#imprimivel}.
+	 * @param ctx the parse tree
+	 */
+	void enterImprimivel(jiboiaParser.ImprimivelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link jiboiaParser#imprimivel}.
+	 * @param ctx the parse tree
+	 */
+	void exitImprimivel(jiboiaParser.ImprimivelContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link jiboiaParser#comandoImprimir}.
 	 * @param ctx the parse tree
 	 */
