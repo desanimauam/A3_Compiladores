@@ -1,6 +1,8 @@
 grammar jiboia;
 
 // Regras léxicas
+COMMENT: '#' ~[\r\n]* -> skip;
+TRIPLE_QUOTES: '\'\'\'' .*? '\'\'\'' -> skip;
 WS : [ \t\r\n]+ -> skip;
 
 // Regras gramaticais
