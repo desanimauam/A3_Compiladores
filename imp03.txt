@@ -3,7 +3,9 @@ texto t = "t"
 texto g="g"
 
 se i < 10:
-	duplo i
+	duplo i = 0.0
+	imprimir("A")
+	imprimir("B")
 
 senaose i == 10:
 	imprimir("B")

@@ -22,7 +22,7 @@ tipo : 'inteiro' | 'duplo' | 'texto' | 'booleano';
 
 infVariavel: ('=' expressao)?;
 
-decVariavel : tipo ID infVariavel {saida+= ""+t+t + $tipo.text + " " + $ID.text + $infVariavel.text + ";\n";};
+decVariavel : tipo ID infVariavel {saida+= $tipo.text + " " + $ID.text + $infVariavel.text + ";\n";};
 
 chamadaFuncao : ID ('.' ID)* '(' (expressao (',' expressao)*)? ')';
 
@@ -32,13 +32,13 @@ inicioPor : decVariavel | expressao;
 
 atualizaPor : atribuicao (',' atribuicao)*;
 
-comando : atribuicao
-        | chamadaFuncao
-        | decVariavel
-        | comandoImprimir
-        | comPor
-        | comandoSe
-        | comandoEnquanto;
+comando : ({saida+=""+t+t;}atribuicao) 
+        | ({saida+=""+t+t;}chamadaFuncao)
+        | ({saida+=""+t+t;}decVariavel)
+        | ({saida+=""+t+t;}comandoImprimir {saida+=$comandoImprimir.text + "\n";})
+        | ({saida+=""+t+t;}comPor)
+        | ({saida+=""+t+t;}comandoSe)
+        | (comandoEnquanto);
 
 atribuicao : variavel (atribuicaoComposta | '=' expressao);
 
@@ -49,7 +49,7 @@ atribuicaoComposta : '+=' expressao
                    | '%=' expressao;
 
 comandoSe : 'se' {saida+="\n" + t+t + "if (";} condicao {saida+=$condicao.text + "){\n";} ':'
-			{saida+=""+t+t;} bloco {saida+=$bloco.text + "\n"+t+t+t;} comandoSenaoSe* comandoSenao?;
+			{saida+=""+t+t;} bloco comandoSenaoSe* comandoSenao?;
 
 comandoSenao : 'senao' ':' bloco;
 

@@ -6,10 +6,15 @@ public class Saida{
         duplo i;
         texto t="t";
         texto g="g";
-
+        
         if (i<10){
-                duplo i;
-duploi
-            
+                duplo i=0.0;
+        imprimir("A")
+        imprimir("B")
+        imprimir("B")
+        imprimir("D")
+        imprimir("C")
+        imprimir("oi")
+        
     }
 }
