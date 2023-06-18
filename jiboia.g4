@@ -4,7 +4,7 @@ grammar jiboia;
 WS : [ \t\r\n]+ -> skip;
 
 // Regras gramaticais
-programa : (comando | comandoSe | comandoEnquanto)* EOF {System.out.println("OK"); };
+programa : (comando | comandoSe | comandoEnquanto | comPor)* EOF {System.out.println("OK"); };
 
 tipo : 'inteiro' | 'duplo' | 'texto' | 'booleano';
 
@@ -54,7 +54,7 @@ expressao : expressaoLogica | expressaoAritmetica;
 
 expressaoRelacional : expressaoAritmetica (operadorRelacional expressaoAritmetica)?;
 
-expressaoAritmetica : fator ((Soma | Subtracao) fator)*;
+expressaoAritmetica : termo ((Soma | Subtracao) termo)*;
 
 expressaoLogica : expressaoRelacional (operadorLogico expressaoRelacional)*;
 
@@ -73,7 +73,7 @@ fator : NUMERO
 
 variavel : ID;
 
-comandoImprimir : 'imprimir' '(' expressao ')';
+comandoImprimir : 'imprimir' '(' expressao ','? ('(' expressao ')')? ')';
 
 Soma : '+';
 Subtracao : '-';
@@ -83,4 +83,4 @@ Modulo : '%';
 
 NUMERO : [0-9]+ ('.' [0-9]+)?;
 TEXTO : '"' ~[\r\n]* '"';
-ID : [a-zA-Z]+;
+ID : [a-zA-Z0-9]+;
